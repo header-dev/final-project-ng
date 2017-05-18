@@ -15,13 +15,17 @@ import { AngularFireModule } from "angularfire2/index";
 import { AngularFireDatabaseModule } from "angularfire2/database";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { LessonsListComponent } from './lessons-list/lessons-list.component';
+import { RouterModule } from "@angular/router";
+import { routerConfig } from "app/router.config";
+import { TopMenuComponent } from './top-menu/top-menu.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LessonsListComponent
+    LessonsListComponent,
+    TopMenuComponent
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig),
@@ -29,7 +33,8 @@ import { LessonsListComponent } from './lessons-list/lessons-list.component';
     FormsModule,
     HttpModule,
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    RouterModule.forRoot(routerConfig)
   ],
   providers: [LessonsService],
   bootstrap: [AppComponent]
