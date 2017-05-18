@@ -13,8 +13,6 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable }
 export class AppComponent {
   // title = 'app works!';
 
-
-
   courses$: FirebaseListObservable<any>;
   lesson$: FirebaseObjectObservable<any>;
   firstCourse: any;
