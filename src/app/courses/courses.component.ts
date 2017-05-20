@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoursesService } from "../shared/model/courses.service";
 import { Observable } from "rxjs/Rx";
-import { Courses } from "app/shared/model/courses";
+import { Courses } from "../shared/model/courses";
 
 @Component({
   selector: 'app-courses',

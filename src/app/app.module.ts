@@ -20,6 +20,7 @@ import { RouterModule } from "@angular/router";
 import { routerConfig } from "app/router.config";
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { CoursesComponent } from './courses/courses.component';
+import { CourseDetailComponent } from './course-detail/course-detail.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { CoursesComponent } from './courses/courses.component';
     HomeComponent,
     LessonsListComponent,
     TopMenuComponent,
-    CoursesComponent
+    CoursesComponent,
+    CourseDetailComponent
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig),
