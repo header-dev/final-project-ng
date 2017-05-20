@@ -2,6 +2,7 @@ import { Route } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { CoursesComponent } from "./courses/courses.component";
 import { CourseDetailComponent } from "app/course-detail/course-detail.component";
+import { LessonDetailComponent } from "app/lesson-detail/lesson-detail.component";
 
 
 export const routerConfig: Route[] = [
@@ -21,6 +22,10 @@ export const routerConfig: Route[] = [
                 component: CoursesComponent
             }
         ]
+    },
+    {
+        path: 'lessons/:id',
+        component: LessonDetailComponent
     },
     {
         path: '',

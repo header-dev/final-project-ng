@@ -9,7 +9,7 @@
         <li><a (click)="next()">Next</a></li>
       </ul>
     </nav>
-    <lessons-list *ngIf="lessons" [lessons]="lessons"></lessons-list>
+    <lessons-list *ngIf="lessons" [lessons]="lessons" (lesson)="navigateToLesson($event)"></lessons-list>
     <button class="btn btn-success">New Lesson</button>
   </div>
 </div>

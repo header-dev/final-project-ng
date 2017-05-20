@@ -27,8 +27,7 @@ export class LessonsService {
       }
     })
       .filter(results => results && results.length > 0)
-      .map(results => Lesson.fromJson(results[0]))
-      .do(console.log);
+      .map(results => Lesson.fromJson(results[0]));
 
   }
 

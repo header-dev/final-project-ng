@@ -71,6 +71,9 @@ export class CourseDetailComponent implements OnInit {
     );
   }
 
+  navigateToLesson(lesson: Lesson) {
+    this.router.navigate(['lessons', lesson.url]);
+  }
 
 
 }
