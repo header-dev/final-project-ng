@@ -1,3 +1,15 @@
-<p>
-  course-detail works!
-</p>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="page-header" align="center">
+      <h3>{{ (course$ | async)?.description }}</h3>
+    </div>
+    <nav aria-label="...">
+      <ul class="pager">
+        <li><a (click)="previous()">Previous</a></li>
+        <li><a (click)="next()">Next</a></li>
+      </ul>
+    </nav>
+    <lessons-list *ngIf="lessons" [lessons]="lessons"></lessons-list>
+    <button class="btn btn-success">New Lesson</button>
+  </div>
+</div>
