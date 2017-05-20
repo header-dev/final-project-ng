@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 
 import { LessonsService } from "./shared/model/lessons.service";
+import { CoursesService } from "./shared/model/courses.service";
 
 import { firebaseConfig } from "../environments/firebase.config";
 import { AngularFireModule } from "angularfire2/index";
@@ -18,6 +19,7 @@ import { LessonsListComponent } from './lessons-list/lessons-list.component';
 import { RouterModule } from "@angular/router";
 import { routerConfig } from "app/router.config";
 import { TopMenuComponent } from './top-menu/top-menu.component';
+import { CoursesComponent } from './courses/courses.component';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { TopMenuComponent } from './top-menu/top-menu.component';
     AppComponent,
     HomeComponent,
     LessonsListComponent,
-    TopMenuComponent
+    TopMenuComponent,
+    CoursesComponent
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig),
@@ -36,7 +39,7 @@ import { TopMenuComponent } from './top-menu/top-menu.component';
     AngularFireAuthModule,
     RouterModule.forRoot(routerConfig)
   ],
-  providers: [LessonsService],
+  providers: [LessonsService, CoursesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
