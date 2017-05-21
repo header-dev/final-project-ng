@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { LessonsService } from "app/shared/model/lessons.service";
 import { Lesson } from "app/shared/model/lesson";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-lesson-detail',
@@ -13,15 +14,34 @@ export class LessonDetailComponent implements OnInit {
   lesson: Lesson;
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     private lessonsService: LessonsService) {
+
+    console.log('lesson detail created');
 
   }
 
   ngOnInit() {
-    const lessonUrl = this.route.snapshot.params['id'];
-    const lesson$ = this.lessonsService.findLessonByUrl(lessonUrl);
+    
+    this.route.params.switchMap(params => {
+      const lessonUrl = params['id'];
+      return this.lessonsService.findLessonByUrl(lessonUrl);
+    }).subscribe(lesson => this.lesson = lesson);
 
-    lesson$.do(console.log).subscribe(lessons => this.lesson = lessons);
+  }
+
+  next() {
+    this.lessonsService.loadNextLesson(this.lesson.courseId, this.lesson.$key)
+      .subscribe(this.navigateToLesson.bind(this));
+  }
+
+  previous() {
+    this.lessonsService.loadPreviousLesson(this.lesson.courseId, this.lesson.$key)
+      .subscribe(this.navigateToLesson.bind(this));
+  }
+
+  navigateToLesson(lesson: Lesson) {
+    this.router.navigate(['lessons', lesson.url]);
   }
 
 }

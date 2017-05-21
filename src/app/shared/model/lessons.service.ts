@@ -13,7 +13,6 @@ export class LessonsService {
   findAllLessons(): Observable<Lesson[]> {
 
     return this.db.list('lessons')
-      .do(console.log)
       .map(Lesson.fromJsonList);
 
   }
@@ -31,7 +30,34 @@ export class LessonsService {
 
   }
 
-  findLessonKeyPerCourseUrl(courseUrl: string, query: FirebaseListFactoryOpts = {}):Observable<string[]> {
-    return
+  loadNextLesson(courseId: string, lessonId: string): Observable<Lesson> {
+
+    return this.db.list(`lessonsPerCourse/${courseId}`, {
+      query: {
+        orderByKey: true,
+        startAt: lessonId,
+        limitToFirst: 2
+      }
+    })
+      .filter(results => results && results.length > 0)
+      .map(results => results[1].$key)
+      .switchMap(lessonId => this.db.object(`lessons/${lessonId}`))
+      .map(Lesson.fromJson);
+
   }
+
+  loadPreviousLesson(courseId: string, lessonId: string): Observable<Lesson> {
+    return this.db.list(`lessonsPerCourse/${courseId}`, {
+      query: {
+        orderByKey: true,
+        endAt: lessonId,
+        limitToLast: 2
+      }
+    })
+      .filter(results => results && results.length > 0)
+      .map(results => results[0].$key)
+      .switchMap(lessonId => this.db.object(`lessons/${lessonId}`))
+      .map(Lesson.fromJson);
+  }
+
 }
