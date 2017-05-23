@@ -1,14 +1,22 @@
-import { Injectable } from '@angular/core';
-import { Observable } from "rxjs/Rx";
+import { Injectable, Inject } from '@angular/core';
+import { Observable, Subject } from "rxjs/Rx";
 import { Lesson } from "./lesson";
 
-import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFireDatabase, FirebaseRef } from "angularfire2";
 import { FirebaseListFactoryOpts } from "angularfire2/interfaces";
+import { Http } from "@angular/http";
 
 @Injectable()
 export class LessonsService {
 
-  constructor(private db: AngularFireDatabase) { }
+  sdkDb: any;
+
+  constructor(private db: AngularFireDatabase, @Inject(FirebaseRef) fb,
+    private http: Http) {
+
+    this.sdkDb = fb.database().ref();
+
+  }
 
   findAllLessons(): Observable<Lesson[]> {
 
@@ -60,4 +68,51 @@ export class LessonsService {
       .map(Lesson.fromJson);
   }
 
+  createNewLesson(courseId: string, lesson: any): Observable<any> {
+
+    const lessonToSave = Object.assign({}, lesson, { courseId });
+
+    const newLessonKey = this.sdkDb.child('lessons').push().key;
+
+    let dataToSave = {};
+
+    dataToSave["lessons/" + newLessonKey] = lessonToSave;
+    dataToSave[`lessonsPerCourse/${courseId}/${newLessonKey}`] = true;
+
+
+    return this.firebaseUpdate(dataToSave);
+
+  }
+
+  firebaseUpdate(dataToSave) {
+
+    const subject = new Subject();
+
+    this.sdkDb.update(dataToSave)
+      .then(
+      val => {
+        subject.next(val);
+        subject.complete();
+      },
+      err => {
+        subject.error(err);
+        subject.complete();
+      }
+      );
+
+    return subject.asObservable();
+
+  }
+
+  saveLesson(lessonId: string, lesson): Observable<any> {
+
+    const lessonToSave = Object.assign({}, lesson);
+    delete (lessonToSave.$key);
+
+    let dataToSave = {};
+    dataToSave[`lessons/${lessonId}`] = lessonToSave;
+    
+    return this.firebaseUpdate(dataToSave);
+
+  }
 }

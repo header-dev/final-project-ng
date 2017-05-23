@@ -1,0 +1,41 @@
+<form [formGroup]="form" autocomplete="off" novalidate class="form-horizontal">
+  <fieldset>
+    <legend>Lesson</legend>
+    <div class="form-group">
+      <label class="control-label col-md-2">Description:</label>
+      <div class="col-md-4">
+        <input type="text" name="title" formControlName="description" class="form-control">
+        <p class="text-danger" *ngIf="isErrorVisible('description','required')">field is mandatory</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">Lesson Url:</label>
+      <div class="col-md-4">
+        <input type="text" name="title" formControlName="url" class="form-control">
+        <p class="text-danger" *ngIf="isErrorVisible('url','required')">field is mandatory</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">Video Url:</label>
+      <div class="col-md-4">
+        <input type="text" name="title" formControlName="videoUrl" class="form-control">
+        <p class="text-danger" *ngIf="isErrorVisible('videoUrl','required')">field is mandatory</p>
+        <p class="text-danger" *ngIf="isErrorVisible('videoUrl','validUrl')">not a valid url</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">Tags:</label>
+      <div class="col-md-4">
+        <input type="text" name="title" formControlName="tags" class="form-control">
+        <p class="text-danger" *ngIf="isErrorVisible('tags','required')">field is mandatory</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-2">Long Description:</label>
+      <div class="col-md-4">
+        <textarea rows="" cols="" name="description" formControlName="longDescription" class="form-control"></textarea>
+        <p class="text-danger" *ngIf="isErrorVisible('longDescription','required')">field is mandatory</p>
+      </div>
+    </div>
+  </fieldset>
+</form>

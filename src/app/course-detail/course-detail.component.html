@@ -10,6 +10,8 @@
       </ul>
     </nav>
     <lessons-list *ngIf="lessons" [lessons]="lessons" (lesson)="navigateToLesson($event)"></lessons-list>
-    <button class="btn btn-success">New Lesson</button>
+    <button class="btn btn-success" routerLink="new" [queryParams]="{courseId: (course$ | async)?.$key}">
+      New Lesson
+    </button>
   </div>
 </div>

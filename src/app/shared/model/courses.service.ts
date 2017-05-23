@@ -30,6 +30,7 @@ export class CoursesService {
 
     return this
       .findCourseByUrl(courseUrl)
+      .filter(course => !!course)
       .switchMap(course => this.db.list(`lessonsPerCourse/${course.$key}`, query))
       .map(lspc => lspc.map(lpc => lpc.$key));
 
