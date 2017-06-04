@@ -22,7 +22,7 @@ export class LessonDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.route.params.switchMap(params => {
       const lessonUrl = params['id'];
       return this.lessonsService.findLessonByUrl(lessonUrl);
@@ -42,6 +42,18 @@ export class LessonDetailComponent implements OnInit {
 
   navigateToLesson(lesson: Lesson) {
     this.router.navigate(['lessons', lesson.url]);
+  }
+
+  delete() {
+    this.lessonsService.deleteLesson(this.lesson.$key)
+      .subscribe(
+      () => alert('Lesson deleted'),
+      console.error
+      );
+  }
+
+  requestLessonDeletion() {
+    this.lessonsService.requestLessonDeletion(this.lesson.$key,this.lesson.courseId);
   }
 
 }

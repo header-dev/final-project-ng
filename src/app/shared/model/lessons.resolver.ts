@@ -13,8 +13,9 @@ export class LessonResolver implements Resolve<Lesson>{
     }
 
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-        Observable<Lesson> {
+    resolve(route: ActivatedRouteSnapshot, 
+    state: RouterStateSnapshot):Observable<Lesson> {
+        
         return this.lessonsService.
             findLessonByUrl(route.params['id'])
             .first();

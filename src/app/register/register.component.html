@@ -1,0 +1,28 @@
+<form autocomplete="off" novalidate class="form-horizontal" [formGroup]="form">
+    <fieldset>
+        <legend>Register</legend>
+        <div class="form-group">
+            <label class="control-label col-md-3">Email : </label>
+            <div class="col-md-6">
+                <input type="email" name="email" class="form-control" formControlName="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3">Password : </label>
+            <div class="col-md-6">
+                <input type="password" name="password" class="form-control" formControlName="password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3">Confirm Password : </label>
+            <div class="col-md-6">
+                <input type="password" name="confirm" class="form-control" formControlName="confirm">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3 col-md-offset-3">
+                <button class="btn btn-success" (click)="signUp()" [disabled]="!isPasswordMatch()">Create User</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

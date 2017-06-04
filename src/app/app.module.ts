@@ -13,9 +13,9 @@ import { LessonsService } from "./shared/model/lessons.service";
 import { CoursesService } from "./shared/model/courses.service";
 
 import { firebaseConfig } from "../environments/firebase.config";
-import { AngularFireModule } from "angularfire2/index";
-// import { AngularFireDatabaseModule } from "angularfire2";
-// import { AngularFireAuthModule } from "angularfire2";
+import { AngularFireModule } from "angularfire2";
+import { AngularFireDatabaseModule } from "angularfire2/database";
+import { AngularFireAuthModule } from "angularfire2/auth";
 import { LessonsListComponent } from './lessons-list/lessons-list.component';
 import { RouterModule } from "@angular/router";
 import { routerConfig } from "app/router.config";
@@ -28,6 +28,10 @@ import { NewLessonComponent } from './new-lesson/new-lesson.component';
 import { LessonFormComponent } from './lesson-form/lesson-form.component';
 import { EditLessonComponent } from './edit-lesson/edit-lesson.component';
 import { LessonResolver } from "app/shared/model/lessons.resolver";
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { AuthService } from "app/shared/security/auth.service";
+import { AuthGuard } from "app/shared/security/auth.guard";
 
 
 @NgModule({
@@ -42,19 +46,21 @@ import { LessonResolver } from "app/shared/model/lessons.resolver";
     SafeUrlPipe,
     NewLessonComponent,
     LessonFormComponent,
-    EditLessonComponent
+    EditLessonComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig),
     BrowserModule,
     FormsModule,
     HttpModule,
-    // AngularFireDatabaseModule,
-    // AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     RouterModule.forRoot(routerConfig),
     ReactiveFormsModule
   ],
-  providers: [LessonsService, CoursesService, LessonResolver],
+  providers: [LessonsService, CoursesService, LessonResolver, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

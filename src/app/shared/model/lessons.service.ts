@@ -2,16 +2,18 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable, Subject } from "rxjs/Rx";
 import { Lesson } from "./lesson";
 
-import { AngularFireDatabase, FirebaseRef } from "angularfire2";
+import { AngularFireDatabase } from "angularfire2/database";
 import { FirebaseListFactoryOpts } from "angularfire2/interfaces";
 import { Http } from "@angular/http";
+import { firebaseConfig } from "environments/firebase.config";
+import { FirebaseApp } from "angularfire2";
 
 @Injectable()
 export class LessonsService {
 
   sdkDb: any;
 
-  constructor(private db: AngularFireDatabase, @Inject(FirebaseRef) fb,
+  constructor(private db: AngularFireDatabase, @Inject(FirebaseApp) fb: FirebaseApp,
     private http: Http) {
 
     this.sdkDb = fb.database().ref();
@@ -111,8 +113,21 @@ export class LessonsService {
 
     let dataToSave = {};
     dataToSave[`lessons/${lessonId}`] = lessonToSave;
-    
+
     return this.firebaseUpdate(dataToSave);
 
+  }
+
+  deleteLesson(lessonId: string): Observable<any> {
+    const url = firebaseConfig.databaseURL + '/lessons/' + lessonId + '.json';
+    return this.http.delete(url);
+  }
+
+  requestLessonDeletion(lessonId: string, courseId: string) {
+
+    this.sdkDb.child('queue/tasks').push({ lessonId, courseId })
+      .then(
+        () => alert('lesson deletion requested !')
+      );
   }
 }

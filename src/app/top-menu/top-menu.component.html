@@ -21,9 +21,9 @@
         <li routerLinkActive="active"><a routerLink="courses" >Courses</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a>Login</a></li>
-        <li><a>Register</a></li>
-        <li><a>Logout</a></li>
+        <li *ngIf="!authInfo?.isLoggedIn()" routerLinkActive="active" ><a routerLink="login">Login</a></li>
+        <li *ngIf="!authInfo?.isLoggedIn()" routerLinkActive="active" ><a routerLink="register">Register</a></li>
+        <li *ngIf="authInfo?.isLoggedIn()" (click)="logout()"><a>Logout</a></li>
       </ul>
     </div>
     <!-- /.navbar-collapse -->
